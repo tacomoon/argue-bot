@@ -1,16 +1,13 @@
-"use strict";
+'use strict'
 
-const answerMap = new Map([
-  ['Да', ['нет', 'не', 'не-а']],
-  ['Нет', ['да', 'ага']],
-  ['Нет, ты', ['нет, ты', 'нет ты']],
-  ['Нет, я', ['нет, я', 'нет я']]
-])
+const config = require('config')
 
-function chooseAnswer(message) {
+const answerMap = config.get('answerMap')
+
+function chooseAnswer (message) {
   const escapedMessage = message.trim().toLowerCase()
 
-  for (let [key, value] of answerMap) {
+  for (const [key, value] of Object.entries(answerMap)) {
     if (value.includes(escapedMessage)) {
       return key
     }
