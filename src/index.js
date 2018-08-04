@@ -3,11 +3,10 @@
 const config = require('config')
 const express = require('express')
 
-const vk = require('./vk')
 const { chooseAnswer } = require('./argue')
+const server = require('./server')
 
 const { port } = config.get('express')
-const { require: vkRequired } = config.get('vk')
 
 const app = express()
 
@@ -23,8 +22,6 @@ app.get('/test/:message', (request, response) => {
 app.listen(port, () => {
   console.log(`Server started: http://localhost:${port}/`)
 
-  if (vkRequired) {
-    console.log('Starting VK server')
-    vk.server(chooseAnswer)
-  }
+  console.log('Starting server')
+  server(chooseAnswer)
 })

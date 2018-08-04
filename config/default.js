@@ -4,11 +4,10 @@ const config = {
   express: {
     port: 3000
   },
-  vk: {
-    require: true,
-    apiVersion: 5.8,
+  server: {
     wait: 25,
-    accessToken: process.env.VK_TOKEN
+    token: process.env.ACCESS_TOKEN,
+    version: '5.80'
   },
   answerMap: {
     'Да': ['нет', 'не', 'не-а'],
