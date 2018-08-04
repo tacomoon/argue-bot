@@ -3,9 +3,8 @@
 const config = require('config')
 const express = require('express')
 
+const { loopServer, getLongPullServer } = require('./server')
 const { chooseAnswer } = require('./argue')
-const server = require('./server')
-
 const { port } = config.get('express')
 
 const app = express()
@@ -19,9 +18,15 @@ app.get('/test/:message', (request, response) => {
   response.send(answer || 'No answer provided')
 })
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`Server started: http://localhost:${port}/`)
 
   console.log('Starting server')
-  server(chooseAnswer)
+
+  const { response: { server, key, ts: initial } } = await getLongPullServer()
+
+  let ts = initial
+  while (true) {
+    ts = await loopServer(server, key, ts, chooseAnswer)
+  }
 })
