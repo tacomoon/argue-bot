@@ -1,0 +1,23 @@
+{
+  "name": "argue-bot",
+  "version": "0.1.0",
+  "description": "Бот для интеллектуальных споров с людьми в мессенджерах",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slothforge/argue-bot.git"
+  },
+  "author": "slothforge",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/slothforge/argue-bot/issues"
+  },
+  "homepage": "https://github.com/slothforge/argue-bot#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.3"
+  }
+}
