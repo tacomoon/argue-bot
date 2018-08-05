@@ -2,6 +2,7 @@
 
 const config = require('config')
 const express = require('express')
+const { logger: log } = require('./utils')
 
 const { loopServer, getLongPullServer } = require('./server')
 const { chooseAnswer } = require('./argue')
@@ -19,9 +20,9 @@ app.get('/test/:message', (request, response) => {
 })
 
 app.listen(port, async () => {
-  console.log(`Server started: http://localhost:${port}/`)
+  log.info(`Server started: http://localhost:${port}/`)
 
-  console.log('Starting server')
+  log.info('Starting server')
 
   const { response: { server, key, ts: initial } } = await getLongPullServer()
 

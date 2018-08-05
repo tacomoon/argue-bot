@@ -3,6 +3,7 @@
 const axios = require('axios')
 const config = require('config')
 const { token, version, wait } = config.get('server')
+const { logger: log } = require('../utils')
 
 async function getLongPullServer () {
   return requestApiMethod('messages.getLongPollServer')
@@ -30,7 +31,7 @@ async function executeRequest (url, params) {
       return response.data
     })
     .catch((error) => {
-      console.log(error)
+      log.error(error)
     })
 }
 
