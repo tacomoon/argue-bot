@@ -8,7 +8,7 @@ function formattedDate (date = new Date()) {
 
 class Logger {
   info (message) {
-    console.log('\x1b[32m', `${formattedDate()}  INFO: ${message}`)
+    console.log(`${formattedDate()}  INFO: ${message}`)
   }
 
   error (message) {
