@@ -28,7 +28,7 @@ function requestApiMethod (method, params) {
 function executeRequest (url, params) {
   return axios.get(url, { params })
     .then((response) => {
-      log.info(`${getUrl(response)}\n Response: ${JSON.stringify(response.data)}`)
+      log.info(`${getUrl(response)}\nResponse: ${JSON.stringify(response.data)}`)
       return response.data
     })
     .catch((error) => {
