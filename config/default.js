@@ -4,6 +4,9 @@ const config = {
   express: {
     port: 3000
   },
+  logger: {
+    logToFile: false
+  },
   server: {
     wait: 25,
     token: process.env.ACCESS_TOKEN,

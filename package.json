@@ -1,6 +1,6 @@
 {
   "name": "argue-bot",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Бот для интеллектуальных споров с людьми в мессенджерах",
   "main": "index.js",
   "scripts": {

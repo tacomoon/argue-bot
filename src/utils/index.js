@@ -1,6 +1,9 @@
 'use strict'
 
 const fs = require('fs')
+const config = require('config')
+
+const { logToFile } = config.get('logger')
 
 function formatMessage (level, message) {
   const date = new Date().toISOString()
@@ -10,19 +13,29 @@ function formatMessage (level, message) {
   return `${date} ${level}: ${message}`
 }
 
+function writeToConsole (message) {
+  console.log(message)
+}
+
+function writeToFile (message) {
+  if (logToFile) {
+    fs.appendFileSync('server.log', message + '\n')
+  }
+}
+
 class Logger {
   info (message) {
     const formattedMessage = formatMessage(' INFO', message)
 
-    console.log(formattedMessage)
-    fs.appendFileSync('server.log', formattedMessage + '\n')
+    writeToFile(formattedMessage)
+    writeToConsole(formattedMessage)
   }
 
   error (message) {
     const formattedMessage = formatMessage('ERROR', message)
 
-    console.log('\x1b[31m', formattedMessage)
-    fs.appendFileSync('server.log', formattedMessage + '\n')
+    writeToFile(formattedMessage)
+    writeToConsole(formattedMessage)
   }
 }
 
