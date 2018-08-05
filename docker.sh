@@ -20,7 +20,7 @@ case ${1} in
         ;;
 
     r | run )
-        docker run -d -p 8080:3000 argue-bot:latest
+        docker run -d -p 8080:3000 -e ACCESS_TOKEN=${ACCESS_TOKEN} argue-bot:latest
         ;;
 
     s | stop )
@@ -28,7 +28,7 @@ case ${1} in
         if [ -z "${CONTAINER_ID}" ]; then log_message "Can't find running backend container" ${RED}; fi
 
         ! [ -z "${CONTAINER_ID}" ] && {
-            log_message "Stopping container $CONTAINER_ID"
+            log_message "Stop container $CONTAINER_ID"
             docker stop ${CONTAINER_ID}
         }
         ;;
