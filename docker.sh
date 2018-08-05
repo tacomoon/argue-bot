@@ -43,8 +43,8 @@ case ${1} in
         ;;
 
      cl | clean )
-        docker stop $(docker ps -qa -f ancestor=sargue-bot) 2> /dev/null
-        docker rm -f $(docker ps -qa -f ancestor=sargue-bot) 2> /dev/null
+        docker stop $(docker ps -qa -f ancestor=argue-bot) 2> /dev/null
+        docker rm -f $(docker ps -qa -f ancestor=argue-bot) 2> /dev/null
         docker rmi -f $(docker images argue-bot -q) 2> /dev/null
         docker rmi node:10.8.0
         ;;
