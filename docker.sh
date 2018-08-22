@@ -8,7 +8,7 @@ GREEN='\033[0;32m'
 ACCESS_TOKEN='paste_your_access_token_here'
 
 function log_message() {
-    echo ${1}
+    echo -e ${1}
 }
 
 function log_error() {
@@ -37,6 +37,8 @@ function build_container() {
 }
 
 function run_container() {
+    stop_container 2> /dev/null
+    log_message "starting container"
     docker run -d -p 8080:3000 -e ACCESS_TOKEN=${ACCESS_TOKEN} argue-bot:latest
 }
 
@@ -44,6 +46,7 @@ function stop_container() {
     CONTAINER_ID="$(docker ps -q -f=ancestor=argue-bot:latest)"
     if [ -z "${CONTAINER_ID}" ]; then
         log_error "can't find running container"
+        return 1
     fi
 
     ! [ -z "${CONTAINER_ID}" ] && {
@@ -56,6 +59,7 @@ function connect_to_container() {
     CONTAINER_ID="$(docker ps -q -f=ancestor=argue-bot:latest)"
     if [ -z "${CONTAINER_ID}" ]; then
         log_error "can't find running container"
+        return 1
     fi
 
     ! [ -z "${CONTAINER_ID}" ] && {
@@ -120,10 +124,13 @@ function clean_docker() {
     fi
 
     stop_container 2> /dev/null
+    log_message "removing related containers"
     docker rm -f $(docker ps -qa -f ancestor=argue-bot) 2> /dev/null
+    log_message "removing related images"
     docker rmi -f $(docker images argue-bot -q) 2> /dev/null
 
     if ${with_node}; then
+        log_message "removing related node"
         docker rmi node:10.8.0
     fi
 }
@@ -135,5 +142,10 @@ case ${1} in
     c | connect ) connect_to_container ;;
     l | logs ) get_logs_from_container $@ ;;
     cl | clean ) clean_docker $@ ;;
-    * ) print_help ;;
+    * )
+        if [[ ${1} ]]; then
+            log_error "unknown command: ${1} \n"
+        fi
+        print_help
+    ;;
 esac
