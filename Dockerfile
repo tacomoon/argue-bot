@@ -5,7 +5,7 @@ ENV NODE_CONFIG_DIR '../config'
 
 EXPOSE 3000
 
-COPY . .
-WORKDIR /src
+COPY . /argue-bot
+WORKDIR /argue-bot
 
-CMD node index.js
+CMD npm install && node src/index.js

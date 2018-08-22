@@ -10,7 +10,7 @@ function log_message() {
     echo -e "${color}${1}${NC}"
 }
 
-ACCESS_TOKEN='paste your access token here'
+ACCESS_TOKEN='paste_your_access_token_here'
 
 case ${1} in
     b | build )
@@ -25,7 +25,9 @@ case ${1} in
 
     s | stop )
         CONTAINER_ID="$(docker ps -q -f=ancestor=argue-bot:latest)"
-        if [ -z "${CONTAINER_ID}" ]; then log_message "Can't find running backend container" ${RED}; fi
+        if [ -z "${CONTAINER_ID}" ]; then
+            log_message "Can't find running container" ${RED};
+        fi
 
         ! [ -z "${CONTAINER_ID}" ] && {
             log_message "Stop container $CONTAINER_ID"
@@ -35,7 +37,9 @@ case ${1} in
 
     c | connect )
         CONTAINER_ID="$(docker ps -q -f=ancestor=argue-bot:latest)"
-        if [ -z "${CONTAINER_ID}" ]; then log_message "Can't find running container with name 'postgres'" ${RED}; fi
+        if [ -z "${CONTAINER_ID}" ]; then
+            log_message "Can't find running container" ${RED};
+        fi
 
         ! [ -z "${CONTAINER_ID}" ] && {
             docker exec -it ${CONTAINER_ID} bash
@@ -46,7 +50,9 @@ case ${1} in
         docker stop $(docker ps -qa -f ancestor=argue-bot) 2> /dev/null
         docker rm -f $(docker ps -qa -f ancestor=argue-bot) 2> /dev/null
         docker rmi -f $(docker images argue-bot -q) 2> /dev/null
-        docker rmi node:10.8.0
+        if [ "${2}" = "--with-node" ]; then
+            docker rmi node:10.8.0
+        fi
         ;;
 
     * )
