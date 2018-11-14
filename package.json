@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Бот для интеллектуальных споров с людьми в мессенджерах",
   "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/slothforge/argue-bot.git"
